@@ -15,7 +15,7 @@ const Header = () => {
   // console.log(user);
   const [showMypage, setShowMypage] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  
+
   // ref 추가
   const mypageRef = useRef(null);
   const mobileMenuRef = useRef(null);
@@ -28,14 +28,17 @@ const Header = () => {
       if (mypageRef.current && !mypageRef.current.contains(event.target)) {
         setShowMypage(false);
       }
-      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target)) {
+      if (
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(event.target)
+      ) {
         setIsMobileMenuOpen(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -56,7 +59,7 @@ const Header = () => {
     e.preventDefault();
     setShowMypage(!showMypage);
   };
-  
+
   const openChatWindow = (e) => {
     e.preventDefault();
     const width = 390;
@@ -72,12 +75,15 @@ const Header = () => {
   };
   return (
     <div className="w-full flex justify-center shadow-custom sticky top-0 z-50 bg-white">
-      <div ref={containerRef} className="container p-1 flex justify-between items-center relative">
+      <div
+        ref={containerRef}
+        className="container p-1 flex justify-between items-center relative"
+      >
         <div className="logo left-0">
           <Link to="/">
-            <img 
-              src={mediLogo} 
-              alt="메디 로고" 
+            <img
+              src={mediLogo}
+              alt="메디 로고"
               className="w-[150px] md:w-[200px]"
             />
           </Link>
@@ -121,18 +127,38 @@ const Header = () => {
             {/* ref 추가된 모바일 메뉴 영역 */}
             <div ref={mobileMenuRef}>
               {/* 모바일 메뉴 버튼과 내용 */}
-              <button 
-                className="hidden max-sm:block fixed top-4 right-4 webkit-z-40 z-40 mt-2 sm:mt-0" 
+              <button
+                className="hidden max-sm:block fixed top-4 right-4 webkit-z-40 z-40 mt-2 sm:mt-0"
                 onClick={toggleMobileMenu}
               >
-                {isMobileMenuOpen ? <IoClose size={24} /> : <IoMenu size={24} />}
+                {isMobileMenuOpen ? (
+                  <IoClose size={24} />
+                ) : (
+                  <IoMenu size={24} />
+                )}
               </button>
-              
-              <ul className={`flex sm:gap-6 items-center justify-center sm:justify-end ${!isMobileMenuOpen && 'max-sm:hidden'}
-                ${isMobileMenuOpen && 'max-sm:flex max-sm:fixed max-sm:left-0 max-sm:right-0 max-sm:bg-white max-sm:shadow-lg max-sm:flex-col max-sm:py-2 max-sm:z-40'}`}
-                style={isMobileMenuOpen ? { top: `${menuTop - 2}px` } : undefined}>
+
+              <ul
+                className={`flex sm:gap-6 items-center justify-center sm:justify-end ${
+                  !isMobileMenuOpen && "max-sm:hidden"
+                }
+                ${
+                  isMobileMenuOpen &&
+                  "max-sm:flex max-sm:fixed max-sm:left-0 max-sm:right-0 max-sm:bg-white max-sm:shadow-lg max-sm:flex-col max-sm:py-2 max-sm:z-40"
+                }`}
+                style={
+                  isMobileMenuOpen ? { top: `${menuTop - 2}px` } : undefined
+                }
+              >
                 {navItems.map((item, idx) => (
-                  <li key={idx} className={`tracking-tight max-sm:w-full max-sm:text-center max-sm:py-2 ${(item.label === "챗봇" || item.label === "건강정보") ? 'max-sm:bg-blue-50' : ''}`}>
+                  <li
+                    key={idx}
+                    className={`tracking-tight max-sm:w-full max-sm:text-center max-sm:py-2 ${
+                      item.label === "챗봇" || item.label === "건강정보"
+                        ? "max-sm:bg-blue-50"
+                        : ""
+                    }`}
+                  >
                     {item.to === "/chat" ? (
                       <Link
                         to={item.to}
@@ -142,7 +168,11 @@ const Header = () => {
                           setIsMobileMenuOpen(false);
                         }}
                       >
-                        <img src={chatIcon} alt="챗봇 아이콘" className="w-5 h-5 mb-px" />
+                        <img
+                          src={chatIcon}
+                          alt="챗봇 아이콘"
+                          className="w-5 h-5 mb-px"
+                        />
                         {item.label}
                       </Link>
                     ) : item.to === "/mediinfo" ? (
